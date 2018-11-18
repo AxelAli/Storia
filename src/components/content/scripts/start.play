@@ -1,0 +1,24 @@
+BACKGROUND day
+>Rebecca(neutral)
+Can't belive she said that, girl!
+>Oscar(angry)
+For the last time Rebecca,I am not a 'girl'
+>Oscar(sad)
+But yeah, she said that
+Anyway...
+Do you want to go eat something?
+>QUESTION
+>>'Yes',lunchtime
+>>'No'
+Oh, i see...
+Well, i have to go Anyway
+see you at night!
+>JUMP nighttime
+>LABEL lunchtime
+>Rebecca(LEAVES)
+So yeah
+I just wanted to show you this
+so yeah , see you at night
+>LABEL nighttime
+>BACKGROUND night
+This is the night
