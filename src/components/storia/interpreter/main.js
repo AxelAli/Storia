@@ -11,11 +11,8 @@ import { extract } from '../utils/regexWrappers';
 export function readScript(url, configFileUrl = configUrl) {
   fetch(url)
     .then(res => res.text())
-    .then(text =>
-      console.log(
-        text,
-        configInterpreter(configFileUrl, extract(url, fileExtension)),
-      ),
+    .then(script =>
+      callInterpreter(configFileUrl, extract(url, fileExtension, script)),
     )
     .catch(error => errorHandler(error));
 }
@@ -23,11 +20,17 @@ export function readScript(url, configFileUrl = configUrl) {
  * @param  {string} url
  * Will use this string to fetch config file
  * @param  {string} fileExtension
- * Will search for this extension in the url's jsON
+ * Will search for this extension in the url's JSON
+ * @param  {string} script
+ * Scirpt to interpret
  */
-function configInterpreter(url, fileExtension) {
+function callInterpreter(url, fileExtension, script) {
   fetch(url)
     .then(res => res.json())
-    .then(json => console.log(json.extensions[fileExtension] + '.js'))
-    .catch(ex => console.log(ex));
+    .then(json =>
+      import('./' + json.extensions[fileExtension] + '.js').then(interpreter =>
+        interpreter.read(script),
+      ),
+    )
+    .catch(error => errorHandler(error));
 }
